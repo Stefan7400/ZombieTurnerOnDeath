@@ -56,6 +56,7 @@ class ZombieCreator(private val itemStacks : ArrayList<ItemStack>, private val p
         }
         if(entity is Zombie){
             entity.equipment.helmet = skull
+            entity.setShouldBurnInDay(false)
         }
 
     }

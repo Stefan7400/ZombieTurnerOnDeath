@@ -3,6 +3,7 @@ package de.crackyman.zombieturner.listener
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent
 import de.crackyman.zombieturner.ZombieTurnerMain
 import de.crackyman.zombieturner.utils.Constants
+import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -15,6 +16,12 @@ class EntityDeathListener : Listener {
     @EventHandler
     fun onEntityDeath(event : EntityDeathEvent){
         if(event.entity.persistentDataContainer.has(NamespacedKey(ZombieTurnerMain.getInsatance(),Constants.NAMESPACED_KEY))){
+            val iterator = event.drops.iterator()
+            while(iterator.hasNext()){
+                if (iterator.next().type == Material.PLAYER_HEAD){
+                    iterator.remove()
+                }
+            }
             val itemSize = event.entity.persistentDataContainer.get(NamespacedKey(ZombieTurnerMain.getInsatance(),Constants.NAMESPACED_KEY),
                 PersistentDataType.INTEGER)
             val itemStacks = ArrayList<ItemStack>()
